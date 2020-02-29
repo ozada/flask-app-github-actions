@@ -16,7 +16,6 @@ jobs:
           architecture: 'x64'
       - name: Install requirements
         run: pip install -r requirements.txt
-      - name: Run tests
-        run: coverage run $(pwd)/src/tests.py
-      - name: Tests report
-        run: coverage report
+      - name: echo workspace
+        run: echo $GITHUB_WORKSPACE
+        shell: bash
