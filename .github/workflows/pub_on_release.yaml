@@ -28,13 +28,15 @@ jobs:
     env:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
+      TAG: ${GITHUB_REF:10}
+      TAG_LATEST: latest
     steps:
       - name: Login to docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login --username ${{ secrets.DOCKER_LOGIN }} --password-stdin
       - uses: actions/checkout@master
       - name: Build image
-        run: docker build -t $LOGIN/$NAME:${GITHUB_REF:10} -f Dockerfile .
-        shell: bash
-      - name: Push image to docker.io
-        run: docker push $LOGIN/$NAME:${GITHUB_REF:10}
-        shell: bash
+        run: docker build -t $LOGIN/$NAME:$TAG -f Dockerfile .
+      - name: Push image tag [${TAG}] to docker.io
+        run: docker push $LOGIN/$NAME:$TAG
+      - name: Push image tag [latest] to docker.io
+        run: docker push $LOGIN/$NAME:$TAG_LATEST
