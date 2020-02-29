@@ -1,6 +1,9 @@
+name: Publish on Docker Hub and Deploy
+
 on:
- release:
-   types: [published]
+  release:
+    types: [published]
+
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
@@ -23,8 +26,8 @@ jobs:
     needs: [run_tests]
     runs-on: [ubuntu-latest]
     env:
-      LOGIN: ozada
-      NAME: flask-app
+      LOGIN: ${{ secrets.DOCKER_LOGIN }}
+      NAME: ${{ secrets.DOCKER_NAME }}
     steps:
       - name: Login to docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login --username ${{ secrets.DOCKER_LOGIN }} --password-stdin
