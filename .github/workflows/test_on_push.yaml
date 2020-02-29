@@ -19,3 +19,7 @@ jobs:
       - name: echo workspace
         run: echo $GITHUB_WORKSPACE
         shell: bash
+      - name: Run tests
+        run: coverage run src/app_test.py
+      - name: Tests report
+        run: coverage report
