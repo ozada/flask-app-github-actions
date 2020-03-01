@@ -8,6 +8,11 @@ on:
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
+#    container:
+#      image: docker://repo:tag
+#      env:
+#        T1: t1
+
     strategy:
       matrix:
         python-version: [3.5, 3.6, 3.7, 3.8]
@@ -28,3 +33,11 @@ jobs:
         run: coverage run src/app_test.py
       - name: Tests report
         run: coverage report
+
+      - name: Hello world action step
+        id: hello
+        uses: ozada/test-action@v1
+        with:
+          who-to-greet: 'Joe Dow'
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
