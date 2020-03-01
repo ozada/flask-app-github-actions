@@ -8,14 +8,19 @@ on:
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8]
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
       - uses: actions/setup-python@v1
         with:
-          python-version: '3.8'
-          architecture: 'x64'
+          python-version: ${{ matrix.python-version }}
       - name: Install requirements
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: echo workspace
         run: echo $GITHUB_WORKSPACE
         shell: bash
