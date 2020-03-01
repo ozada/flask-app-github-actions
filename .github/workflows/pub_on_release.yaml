@@ -28,7 +28,7 @@ jobs:
     env:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
-      TAG: ${GITHUB_REF:10}
+      TAG: ${{ GITHUB_REF:10 }}
       TAG_LATEST: latest
     steps:
       - name: Login to docker.io
